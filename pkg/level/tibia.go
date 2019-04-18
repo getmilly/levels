@@ -23,10 +23,8 @@ func (calc *TibiaCalculator) Calculate(currentLevel, totalXP, earnedXP int) (*Ca
 
 	if result.HasUpgraded {
 		result.NextLevelExperience = calc.calculateExperienceByLevel(currentLevel+2) - result.TotalExperience
-		result.NextLevelPercentage = 100 * (1 - float64((result.TotalExperience))/float64(calc.calculateExperienceByLevel(currentLevel+2)))
 	} else {
 		result.NextLevelExperience = nextLevelExperience - result.TotalExperience
-		result.NextLevelPercentage = 100 * (1 - float64((result.TotalExperience))/float64(nextLevelExperience))
 	}
 
 	return result, nil

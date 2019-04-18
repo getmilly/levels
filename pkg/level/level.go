@@ -9,6 +9,5 @@ type Calculator interface {
 type CalcResult struct {
 	TotalExperience     int
 	HasUpgraded         bool
-	NextLevelPercentage float64
 	NextLevelExperience int
 }
