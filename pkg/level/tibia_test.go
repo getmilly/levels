@@ -19,14 +19,13 @@ func TestTibia_Calculate_Upgrade(t *testing.T) {
 
 	level := 1
 	totalXP := 0
-	earnedXP := 1
+	earnedXP := 200
 
 	result, _ := calculator.Calculate(level, totalXP, earnedXP)
 
-	result2, _ := calculator.Calculate(level, totalXP+earnedXP, result.NextLevelExperience)
-
-	assert.True(t, result2.HasUpgraded)
-	assert.Equal(t, totalXP+earnedXP+result.NextLevelExperience, result2.TotalExperience)
+	assert.Equal(t, result.Level, 3)
+	assert.Equal(t, result.TotalExperience, 40)
+	assert.Equal(t, result.NextLevelExperience, 185)
 }
 
 func TestTibia_Calculate_NonUpgrade(t *testing.T) {
@@ -38,7 +37,7 @@ func TestTibia_Calculate_NonUpgrade(t *testing.T) {
 
 	result, _ := calculator.Calculate(level, totalXP, earnedXP)
 
-	result2, _ := calculator.Calculate(level, totalXP+earnedXP, result.NextLevelExperience-1)
-
-	assert.False(t, result2.HasUpgraded)
+	assert.Equal(t, result.Level, level)
+	assert.Equal(t, result.TotalExperience, totalXP+earnedXP)
+	assert.Equal(t, result.NextLevelExperience, 65)
 }

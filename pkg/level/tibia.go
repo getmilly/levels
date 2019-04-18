@@ -16,15 +16,23 @@ func NewTibiaCalculator(difficulty int) Calculator {
 //Calculate player level.
 func (calc *TibiaCalculator) Calculate(currentLevel, totalXP, earnedXP int) (*CalcResult, error) {
 	result := new(CalcResult)
-	nextLevelExperience := calc.calculateExperienceByLevel(currentLevel + 1)
 
+	result.Level = currentLevel
 	result.TotalExperience = totalXP + earnedXP
-	result.HasUpgraded = result.TotalExperience >= nextLevelExperience
+	result.NextLevelExperience = calc.calculateExperienceByLevel(result.Level + 1)
 
-	if result.HasUpgraded {
-		result.NextLevelExperience = calc.calculateExperienceByLevel(currentLevel+2) - result.TotalExperience
-	} else {
-		result.NextLevelExperience = nextLevelExperience - result.TotalExperience
+	hasUpgraded := result.TotalExperience >= result.NextLevelExperience
+
+	if hasUpgraded {
+		result.Level = result.Level + 1
+		result.TotalExperience = result.TotalExperience - result.NextLevelExperience
+		result.NextLevelExperience = calc.calculateExperienceByLevel(result.Level + 1)
+
+		if result.TotalExperience >= result.NextLevelExperience {
+			return calc.Calculate(result.Level, result.TotalExperience, 0)
+		}
+
+		return result, nil
 	}
 
 	return result, nil
