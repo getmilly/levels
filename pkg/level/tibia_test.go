@@ -1,6 +1,7 @@
 package level_test
 
 import (
+	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -15,29 +16,33 @@ func TestTibia_Calculate_Panics(t *testing.T) {
 }
 
 func TestTibia_Calculate_Upgrade(t *testing.T) {
-	calculator := level.NewTibiaCalculator(10)
+	calculator := level.NewTibiaCalculator(3)
 
 	level := 1
-	totalXP := 0
-	earnedXP := 200
 
-	result, _ := calculator.Calculate(level, totalXP, earnedXP)
+	levelToUpgrade := rand.Intn(100-2) + 2
 
-	assert.Equal(t, result.Level, 3)
-	assert.Equal(t, result.TotalExperience, 40)
-	assert.Equal(t, result.NextLevelExperience, 185)
+	totalXP := calculator.CalculateExperienceByLevel(levelToUpgrade)
+
+	result, _ := calculator.Calculate(level, totalXP, 0)
+
+	assert.True(t, result.HasUpgraded)
+	assert.Equal(t, result.Level, levelToUpgrade)
+	assert.Equal(t, result.TotalExperience, totalXP)
+	assert.True(t, result.TotalExperience+result.ExperienceToUpgrade >= calculator.CalculateExperienceByLevel(levelToUpgrade+1))
 }
 
 func TestTibia_Calculate_NonUpgrade(t *testing.T) {
-	calculator := level.NewTibiaCalculator(10)
+	calculator := level.NewTibiaCalculator(3)
 
 	level := 1
-	totalXP := 0
-	earnedXP := 1
+	missingtToUpgrade := 5
 
-	result, _ := calculator.Calculate(level, totalXP, earnedXP)
+	totalXP := calculator.CalculateExperienceByLevel(level+1) - missingtToUpgrade
 
+	result, _ := calculator.Calculate(level, totalXP, 0)
+
+	assert.False(t, result.HasUpgraded)
 	assert.Equal(t, result.Level, level)
-	assert.Equal(t, result.TotalExperience, totalXP+earnedXP)
-	assert.Equal(t, result.NextLevelExperience, 65)
+	assert.Equal(t, result.ExperienceToUpgrade, missingtToUpgrade)
 }

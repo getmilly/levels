@@ -6,7 +6,7 @@ type TibiaCalculator struct {
 }
 
 //NewTibiaCalculator creates a new PrtTo TibiaCalculator
-func NewTibiaCalculator(difficulty int) Calculator {
+func NewTibiaCalculator(difficulty int) *TibiaCalculator {
 	if difficulty <= 0 {
 		panic("difficulty must be gt zero")
 	}
@@ -19,25 +19,28 @@ func (calc *TibiaCalculator) Calculate(currentLevel, totalXP, earnedXP int) (*Ca
 
 	result.Level = currentLevel
 	result.TotalExperience = totalXP + earnedXP
-	result.NextLevelExperience = calc.calculateExperienceByLevel(result.Level + 1)
+	nextLevelExperience := calc.CalculateExperienceByLevel(result.Level + 1)
+	result.HasUpgraded = result.TotalExperience >= nextLevelExperience
 
-	hasUpgraded := result.TotalExperience >= result.NextLevelExperience
-
-	if hasUpgraded {
+	if result.HasUpgraded {
 		result.Level = result.Level + 1
-		result.TotalExperience = result.TotalExperience - result.NextLevelExperience
-		result.NextLevelExperience = calc.calculateExperienceByLevel(result.Level + 1)
+		nextLevelExperience = calc.CalculateExperienceByLevel(result.Level + 1)
 
-		if result.TotalExperience >= result.NextLevelExperience {
+		if result.TotalExperience >= nextLevelExperience {
 			return calc.Calculate(result.Level, result.TotalExperience, 0)
 		}
+
+		result.ExperienceToUpgrade = nextLevelExperience - result.TotalExperience
 
 		return result, nil
 	}
 
+	result.ExperienceToUpgrade = nextLevelExperience - result.TotalExperience
+
 	return result, nil
 }
 
-func (calc *TibiaCalculator) calculateExperienceByLevel(level int) int {
+//CalculateExperienceByLevel ...
+func (calc *TibiaCalculator) CalculateExperienceByLevel(level int) int {
 	return 50 / calc.difficulty * (level ^ 3 - 6*level ^ 2 + 17*level - 12)
 }
