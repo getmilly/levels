@@ -1,5 +1,9 @@
 package level
 
+import (
+	"math"
+)
+
 //TibiaCalculator applies Tibia level formula
 type TibiaCalculator struct {
 	difficulty int
@@ -24,6 +28,7 @@ func (calc *TibiaCalculator) Calculate(currentLevel, totalXP, earnedXP int) (*Ca
 
 	if result.HasUpgraded {
 		result.Level = result.Level + 1
+		result.TotalExperience = result.TotalExperience - nextLevelExperience
 		nextLevelExperience = calc.CalculateExperienceByLevel(result.Level + 1)
 
 		if result.TotalExperience >= nextLevelExperience {
@@ -42,5 +47,6 @@ func (calc *TibiaCalculator) Calculate(currentLevel, totalXP, earnedXP int) (*Ca
 
 //CalculateExperienceByLevel ...
 func (calc *TibiaCalculator) CalculateExperienceByLevel(level int) int {
-	return 50 / calc.difficulty * (level ^ 3 - 6*level ^ 2 + 17*level - 12)
+	levelFloat := float64(level)
+	return int(float64(50) / float64(calc.difficulty) * (math.Pow(levelFloat, 3) - (6 * math.Pow(levelFloat, 2)) + 17*levelFloat - 12))
 }

@@ -1,7 +1,6 @@
 package level_test
 
 import (
-	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -19,17 +18,14 @@ func TestTibia_Calculate_Upgrade(t *testing.T) {
 	calculator := level.NewTibiaCalculator(3)
 
 	level := 1
-
-	levelToUpgrade := rand.Intn(100-2) + 2
-
-	totalXP := calculator.CalculateExperienceByLevel(levelToUpgrade)
+	totalXP := 350
 
 	result, _ := calculator.Calculate(level, totalXP, 0)
 
-	assert.True(t, result.HasUpgraded)
-	assert.Equal(t, result.Level, levelToUpgrade)
-	assert.Equal(t, result.TotalExperience, totalXP)
-	assert.True(t, result.TotalExperience+result.ExperienceToUpgrade >= calculator.CalculateExperienceByLevel(levelToUpgrade+1))
+	assert.False(t, result.HasUpgraded)
+	assert.Equal(t, result.Level, 3)
+	assert.Equal(t, result.TotalExperience, 50)
+	assert.Equal(t, result.ExperienceToUpgrade, 350)
 }
 
 func TestTibia_Calculate_NonUpgrade(t *testing.T) {
