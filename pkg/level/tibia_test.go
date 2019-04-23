@@ -15,30 +15,30 @@ func TestTibia_Calculate_Panics(t *testing.T) {
 }
 
 func TestTibia_Calculate_Upgrade(t *testing.T) {
-	calculator := level.NewTibiaCalculator(10)
+	calculator := level.NewTibiaCalculator(3)
 
 	level := 1
-	totalXP := 0
-	earnedXP := 1
+	totalXP := 350
 
-	result, _ := calculator.Calculate(level, totalXP, earnedXP)
+	result, _ := calculator.Calculate(level, totalXP, 0)
 
-	result2, _ := calculator.Calculate(level, totalXP+earnedXP, result.NextLevelExperience)
-
-	assert.True(t, result2.HasUpgraded)
-	assert.Equal(t, totalXP+earnedXP+result.NextLevelExperience, result2.TotalExperience)
+	assert.False(t, result.HasUpgraded)
+	assert.Equal(t, result.Level, 3)
+	assert.Equal(t, result.TotalExperience, 50)
+	assert.Equal(t, result.ExperienceToUpgrade, 350)
 }
 
 func TestTibia_Calculate_NonUpgrade(t *testing.T) {
-	calculator := level.NewTibiaCalculator(10)
+	calculator := level.NewTibiaCalculator(3)
 
 	level := 1
-	totalXP := 0
-	earnedXP := 1
+	missingtToUpgrade := 5
 
-	result, _ := calculator.Calculate(level, totalXP, earnedXP)
+	totalXP := calculator.CalculateExperienceByLevel(level+1) - missingtToUpgrade
 
-	result2, _ := calculator.Calculate(level, totalXP+earnedXP, result.NextLevelExperience-1)
+	result, _ := calculator.Calculate(level, totalXP, 0)
 
-	assert.False(t, result2.HasUpgraded)
+	assert.False(t, result.HasUpgraded)
+	assert.Equal(t, result.Level, level)
+	assert.Equal(t, result.ExperienceToUpgrade, missingtToUpgrade)
 }

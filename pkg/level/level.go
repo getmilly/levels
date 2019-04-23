@@ -7,7 +7,8 @@ type Calculator interface {
 
 //CalcResult has all information about a level calculation.
 type CalcResult struct {
-	TotalExperience     int
 	HasUpgraded         bool
-	NextLevelExperience int
+	TotalExperience     int
+	Level               int
+	ExperienceToUpgrade int
 }

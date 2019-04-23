@@ -2,149 +2,32 @@
 
 
 [[projects]]
-  digest = "1:ffe9824d294da03b391f44e1ae8281281b4afc1bdaa9588c9097785e3af10cec"
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
-  pruneopts = "UT"
   revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
   version = "v1.1.1"
 
 [[projects]]
-  digest = "1:3551cd09766876313a751752d82bc78ecc85127b2c58a3bd3fd5fe6c28bc9bd3"
-  name = "github.com/getmilly/grok"
-  packages = [
-    "logging",
-    "nats",
-  ]
-  pruneopts = "UT"
-  revision = "ff4209130c9e81ecae71a45c71d0a64f20813214"
-  version = "0.3.0"
-
-[[projects]]
-  digest = "1:8d26298f907122eb75369de2b9e8781014e28e44170b115538dcb066c31a3606"
-  name = "github.com/gogo/protobuf"
-  packages = [
-    "gogoproto",
-    "proto",
-    "protoc-gen-gogo/descriptor",
-  ]
-  pruneopts = "UT"
-  revision = "ba06b47c162d49f2af050fb4c75bcbc86a159d5c"
-  version = "v1.2.1"
-
-[[projects]]
-  digest = "1:31e761d97c76151dde79e9d28964a812c46efc5baee4085b86f68f0c654450de"
-  name = "github.com/konsorten/go-windows-terminal-sequences"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "f55edac94c9bbba5d6182a4be46d86a2c9b5b50e"
-  version = "v1.0.2"
-
-[[projects]]
-  digest = "1:56eac429b1e499cc3c16666e6357fd2050c68e5bfe7a97765c15705322d9886e"
-  name = "github.com/nats-io/go-nats"
-  packages = [
-    ".",
-    "encoders/builtin",
-    "util",
-  ]
-  pruneopts = "UT"
-  revision = "70fe06cee50d4b6f98248d9675fb55f2a3aa7228"
-  version = "v1.7.2"
-
-[[projects]]
-  digest = "1:7b05ff74c5adeaec9d414fe46364cc962f72b460d600a6df2e86352542951efb"
-  name = "github.com/nats-io/go-nats-streaming"
-  packages = [
-    ".",
-    "pb",
-  ]
-  pruneopts = "UT"
-  revision = "4366d43a0648b4997ed32080f937e8702ab86c48"
-  version = "v0.4.2"
-
-[[projects]]
-  digest = "1:0b5d91120efc54504bc253fda90b08c4be88cd78a4023ef60019e95bb0cdc136"
-  name = "github.com/nats-io/nkeys"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "1546a3320a8f195a5b5c84aef8309377c2e411d5"
-  version = "v0.0.2"
-
-[[projects]]
-  digest = "1:599f3202ce0a754144ddc4be4c6df9c6ab27b1d722a63ede6b2e0c3a2cc338a8"
-  name = "github.com/nats-io/nuid"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "4b96681fa6d28dd0ab5fe79bac63b3a493d9ee94"
-  version = "v1.0.1"
-
-[[projects]]
-  digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
-  pruneopts = "UT"
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:274f67cb6fed9588ea2521ecdac05a6d62a8c51c074c1fccc6a49a40ba80e925"
-  name = "github.com/satori/go.uuid"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
-  version = "v1.2.0"
-
-[[projects]]
-  digest = "1:fd61cf4ae1953d55df708acb6b91492d538f49c305b364a014049914495db426"
-  name = "github.com/sirupsen/logrus"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "8bdbc7bcc01dcbb8ec23dc8a28e332258d25251f"
-  version = "v1.4.1"
-
-[[projects]]
-  digest = "1:972c2427413d41a1e06ca4897e8528e5a1622894050e2f527b38ddf0f343f759"
   name = "github.com/stretchr/testify"
   packages = ["assert"]
-  pruneopts = "UT"
   revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
   version = "v1.3.0"
 
 [[projects]]
-  digest = "1:8ba3ed4c7a815afbc7b2a882116cc13c34a86dafea062fea6ab00d9eac96bf00"
   name = "go.mongodb.org/mongo-driver"
   packages = ["bson/primitive"]
-  pruneopts = "UT"
   revision = "1c3b9b9a41eecdf056560e07b68e6407b8d598c3"
   version = "v1.0.0"
-
-[[projects]]
-  branch = "master"
-  digest = "1:d5891c5bca9c62e5d394ca26491d2b710a1dc08cedeb0ca8f9ac4c3305120b02"
-  name = "golang.org/x/crypto"
-  packages = [
-    "ed25519",
-    "ed25519/internal/edwards25519",
-  ]
-  pruneopts = "UT"
-  revision = "f416ebab96af27ca70b6e5c23d6a0747530da626"
-
-[[projects]]
-  branch = "master"
-  digest = "1:28d862f4f9bf2d1976d1d320481bff661b7565eb876d4df2a981f79e7f40e4cd"
-  name = "golang.org/x/sys"
-  packages = ["unix"]
-  pruneopts = "UT"
-  revision = "12500544f89f9420afe9529ba8940bf72d294972"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = [
-    "github.com/getmilly/grok/nats",
-    "github.com/stretchr/testify/assert",
-    "go.mongodb.org/mongo-driver/bson/primitive",
-  ]
+  inputs-digest = "8933e98ed4bb153d75681ff395b2e5994824566736009119da07aec8b93df723"
   solver-name = "gps-cdcl"
   solver-version = 1
