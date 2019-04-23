@@ -1,12 +1,21 @@
 package level
 
+import (
+	"math"
+)
+
 //TibiaCalculator applies Tibia level formula
 type TibiaCalculator struct {
 	difficulty int
 }
 
 //NewTibiaCalculator creates a new PrtTo TibiaCalculator
-func NewTibiaCalculator(difficulty int) Calculator {
+func NewTibiaCalculator() *TibiaCalculator {
+	return &TibiaCalculator{3}
+}
+
+//NewTibiaCalculatorWithDifficulty creates a new PrtTo TibiaCalculator
+func NewTibiaCalculatorWithDifficulty(difficulty int) *TibiaCalculator {
 	if difficulty <= 0 {
 		panic("difficulty must be gt zero")
 	}
@@ -16,20 +25,33 @@ func NewTibiaCalculator(difficulty int) Calculator {
 //Calculate player level.
 func (calc *TibiaCalculator) Calculate(currentLevel, totalXP, earnedXP int) (*CalcResult, error) {
 	result := new(CalcResult)
-	nextLevelExperience := calc.calculateExperienceByLevel(currentLevel + 1)
 
+	result.Level = currentLevel
 	result.TotalExperience = totalXP + earnedXP
+	nextLevelExperience := calc.CalculateExperienceByLevel(result.Level + 1)
 	result.HasUpgraded = result.TotalExperience >= nextLevelExperience
 
 	if result.HasUpgraded {
-		result.NextLevelExperience = calc.calculateExperienceByLevel(currentLevel+2) - result.TotalExperience
-	} else {
-		result.NextLevelExperience = nextLevelExperience - result.TotalExperience
+		result.Level = result.Level + 1
+		result.TotalExperience = result.TotalExperience - nextLevelExperience
+		nextLevelExperience = calc.CalculateExperienceByLevel(result.Level + 1)
+
+		if result.TotalExperience >= nextLevelExperience {
+			return calc.Calculate(result.Level, result.TotalExperience, 0)
+		}
+
+		result.ExperienceToUpgrade = nextLevelExperience - result.TotalExperience
+
+		return result, nil
 	}
+
+	result.ExperienceToUpgrade = nextLevelExperience - result.TotalExperience
 
 	return result, nil
 }
 
-func (calc *TibiaCalculator) calculateExperienceByLevel(level int) int {
-	return 50 / calc.difficulty * (level ^ 3 - 6*level ^ 2 + 17*level - 12)
+//CalculateExperienceByLevel ...
+func (calc *TibiaCalculator) CalculateExperienceByLevel(level int) int {
+	levelFloat := float64(level)
+	return int(float64(50) / float64(calc.difficulty) * (math.Pow(levelFloat, 3) - (6 * math.Pow(levelFloat, 2)) + 17*levelFloat - 12))
 }

@@ -20,10 +20,22 @@
   version = "0.3.0"
 
 [[projects]]
+  name = "github.com/go-stack/stack"
+  packages = ["."]
+  revision = "2fee6af1a9795aafbe0253a0cfbdf668e1fb8a9a"
+  version = "v1.8.0"
+
+[[projects]]
   name = "github.com/gogo/protobuf"
   packages = ["gogoproto","proto","protoc-gen-gogo/descriptor"]
   revision = "ba06b47c162d49f2af050fb4c75bcbc86a159d5c"
   version = "v1.2.1"
+
+[[projects]]
+  name = "github.com/golang/snappy"
+  packages = ["."]
+  revision = "2a8bb927dd31d8daada140a5d09578521ce5c36a"
+  version = "v0.0.1"
 
 [[projects]]
   name = "github.com/joho/godotenv"
@@ -86,26 +98,50 @@
   version = "v1.3.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/xdg/scram"
+  packages = ["."]
+  revision = "7eeb5667e42c09cb51bf7b7c28aea8c56767da90"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/xdg/stringprep"
+  packages = ["."]
+  revision = "73f8eece6fdcd902c185bf651de50f3828bed5ed"
+
+[[projects]]
   name = "go.mongodb.org/mongo-driver"
-  packages = ["bson/primitive"]
-  revision = "1c3b9b9a41eecdf056560e07b68e6407b8d598c3"
-  version = "v1.0.0"
+  packages = ["bson","bson/bsoncodec","bson/bsonrw","bson/bsontype","bson/primitive","event","internal","mongo","mongo/options","mongo/readconcern","mongo/readpref","mongo/writeconcern","tag","version","x/bsonx","x/bsonx/bsoncore","x/mongo/driver","x/mongo/driver/auth","x/mongo/driver/auth/internal/gssapi","x/mongo/driver/session","x/mongo/driver/topology","x/mongo/driver/uuid","x/network/address","x/network/command","x/network/compressor","x/network/connection","x/network/connstring","x/network/description","x/network/result","x/network/wiremessage"]
+  revision = "fd38aea397a6b7fdd52b5528e4cfd683821e7b39"
+  version = "v1.0.1"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
-  packages = ["ed25519","ed25519/internal/edwards25519"]
-  revision = "f416ebab96af27ca70b6e5c23d6a0747530da626"
+  packages = ["ed25519","ed25519/internal/edwards25519","pbkdf2"]
+  revision = "d864b10871cd4370fe574816b489c819c675ccc7"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sync"
+  packages = ["semaphore"]
+  revision = "112230192c580c3556b8cee6403af37a4fc5f28c"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "12500544f89f9420afe9529ba8940bf72d294972"
+  revision = "953cdadca894cdc07be76fc99f95b40c28f06623"
+
+[[projects]]
+  name = "golang.org/x/text"
+  packages = ["internal/gen","internal/triegen","internal/ucd","transform","unicode/cldr","unicode/norm"]
+  revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
+  version = "v0.3.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "bdc18e79c33b2e507bddb74e3fff5b36d0991ae6f0b78542a0619f3c5bc8702f"
+  inputs-digest = "609bcb5ba48b1ccd68348c51bdd378c49f1b29b42ce5a3423287d7b7745aca5c"
   solver-name = "gps-cdcl"
   solver-version = 1

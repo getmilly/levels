@@ -6,5 +6,5 @@ import (
 
 //LevelUpdated ...
 type LevelUpdated struct {
-	models.CalculatedLevel
+	*models.CalculatedLevel
 }

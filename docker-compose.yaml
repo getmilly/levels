@@ -1,0 +1,30 @@
+
+version: '2.1'
+services:
+  nats:
+    image: nats-streaming
+    ports:
+      - "4222:4222"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+  unit_tests:
+    image: golang:1.11
+    container_name: unit_tests
+    working_dir: /go/src/github.com/getmilly/levels
+    links:
+      - nats:nats
+      - mongo:mongo
+    depends_on:
+      nats:
+        condition: service_started
+      mongo:
+        condition: service_started
+    command: go test -timeout 5s -failfast ./...
+    volumes: 
+      - ./:/go/src/github.com/getmilly/levels
+    environment:
+      - NATS_URL=nats://nats:4222
+      - NATS_CLUSTER=test-cluster
+      - MONGO_URL=mongodb://mongo:27017

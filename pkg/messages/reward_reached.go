@@ -10,6 +10,7 @@ type RewardReached struct {
 	GameID    string            `json:"game_id"`
 	CreatedAt time.Time         `json:"created_at"`
 	Reason    string            `json:"reason"`
+	PlayerID  string            `json:"player_id"`
 	Data      *RewardExperience `json:"data"`
 }
 

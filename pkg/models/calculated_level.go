@@ -8,5 +8,5 @@ type CalculatedLevel struct {
 	PlayerID            string             `json:"player_id" bson:"player_id"`
 	TotalExperience     int                `json:"total_experience" bson:"total_experience"`
 	Level               int                `json:"level" bson:"level"`
-	NextLevelExperience int                `json:"next_level_experience" bson:"next_level_experience"`
+	ExperienceToUpgrade int                `json:"experience_to_upgrade" bson:"next_level_experience"`
 }
