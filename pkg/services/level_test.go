@@ -1,7 +1,6 @@
 package services_test
 
 import (
-	"os"
 	"reflect"
 	"sync"
 	"testing"
@@ -68,10 +67,8 @@ func TestLevel_HandleReward(t *testing.T) {
 }
 
 func getNatsConn() stan.Conn {
-	natsURL := os.Getenv("NATS_URL")
-	clusterID := os.Getenv("NATS_CLUSTER")
-
-	conn, err := stan.Connect(clusterID, uuid.NewV4().String(), stan.NatsURL(natsURL))
+	settings := LoadSettings()
+	conn, err := stan.Connect(settings.NatsCluster, uuid.NewV4().String(), stan.NatsURL(settings.NatsURL))
 
 	if err != nil {
 		panic(err)
@@ -81,7 +78,8 @@ func getNatsConn() stan.Conn {
 }
 
 func getMongoClient() *mongo.Client {
-	client, err := mongodb.Connect(os.Getenv("MONGO_URL"))
+	settings := LoadSettings()
+	client, err := mongodb.Connect(settings.MongoURL)
 
 	if err != nil {
 		panic(err)
