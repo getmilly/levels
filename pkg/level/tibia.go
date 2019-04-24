@@ -10,7 +10,12 @@ type TibiaCalculator struct {
 }
 
 //NewTibiaCalculator creates a new PrtTo TibiaCalculator
-func NewTibiaCalculator(difficulty int) *TibiaCalculator {
+func NewTibiaCalculator() *TibiaCalculator {
+	return &TibiaCalculator{3}
+}
+
+//NewTibiaCalculatorWithDifficulty creates a new PrtTo TibiaCalculator
+func NewTibiaCalculatorWithDifficulty(difficulty int) *TibiaCalculator {
 	if difficulty <= 0 {
 		panic("difficulty must be gt zero")
 	}

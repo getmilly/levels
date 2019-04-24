@@ -10,26 +10,26 @@ import (
 
 func TestTibia_Calculate_Panics(t *testing.T) {
 	assert.Panics(t, func() {
-		level.NewTibiaCalculator(-1)
+		level.NewTibiaCalculatorWithDifficulty(-1)
 	})
 }
 
 func TestTibia_Calculate_Upgrade(t *testing.T) {
-	calculator := level.NewTibiaCalculator(3)
+	calculator := level.NewTibiaCalculator()
 
 	level := 1
 	totalXP := 350
 
 	result, _ := calculator.Calculate(level, totalXP, 0)
 
-	assert.False(t, result.HasUpgraded)
+	assert.True(t, result.HasUpgraded)
 	assert.Equal(t, result.Level, 3)
 	assert.Equal(t, result.TotalExperience, 50)
 	assert.Equal(t, result.ExperienceToUpgrade, 350)
 }
 
 func TestTibia_Calculate_NonUpgrade(t *testing.T) {
-	calculator := level.NewTibiaCalculator(3)
+	calculator := level.NewTibiaCalculator()
 
 	level := 1
 	missingtToUpgrade := 5
