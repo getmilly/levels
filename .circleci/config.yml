@@ -2,7 +2,7 @@
 version: 2.1
 
 defaults: &defaults
-  working_directory: /go/src/github.com/getmilly/grok
+  working_directory: /go/src/github.com/getmilly/levels
   docker:
     - image: circleci/golang:1.11
 commands:
