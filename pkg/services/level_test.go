@@ -22,14 +22,16 @@ import (
 	"github.com/getmilly/levels/pkg/services"
 )
 
-func TestLevel_HandleReward(t *testing.T) {
+func TestLevel_HandleReward_Upgrade(t *testing.T) {
 	natsConn := getNatsConn()
+	mongoClient := getMongoClient()
 	service := services.NewLevelService(
 		"level-upgraded",
 		"level-updated",
 		nats.NewProducer(natsConn),
 		level.NewTibiaCalculator(),
-		repositories.NewCalculatedLevelRepository(getMongoClient()),
+		repositories.NewExperienceHistory(mongoClient),
+		repositories.NewCalculatedLevelRepository(mongoClient),
 	)
 
 	wg := new(sync.WaitGroup)
@@ -47,17 +49,71 @@ func TestLevel_HandleReward(t *testing.T) {
 			Run()
 	}()
 
+	playerID := uuid.NewV4().String()
+
 	err := service.HandleReward(&messages.RewardReached{
-		PlayerID: uuid.NewV4().String(),
+		Kind:     "xp",
+		PlayerID: playerID,
 		Data: &messages.RewardExperience{
 			Experience: 10,
 		},
 	})
 
 	err = service.HandleReward(&messages.RewardReached{
-		PlayerID: uuid.NewV4().String(),
+		Kind:     "xp",
+		PlayerID: playerID,
 		Data: &messages.RewardExperience{
 			Experience: 100,
+		},
+	})
+
+	assert.NoError(t, err)
+
+	wg.Wait()
+}
+
+func TestLevel_HandleReward_Update(t *testing.T) {
+	natsConn := getNatsConn()
+	mongoClient := getMongoClient()
+	service := services.NewLevelService(
+		"level-upgraded",
+		"level-updated",
+		nats.NewProducer(natsConn),
+		level.NewTibiaCalculator(),
+		repositories.NewExperienceHistory(mongoClient),
+		repositories.NewCalculatedLevelRepository(mongoClient),
+	)
+
+	wg := new(sync.WaitGroup)
+	wg.Add(1)
+
+	go func() {
+		nats.NewSubscriber(natsConn).
+			WithQueue(uuid.NewV4().String()).
+			WithSubject("level-updated").
+			WithMessageType(reflect.TypeOf(models.CalculatedLevel{})).
+			WithHandler(func(m interface{}) error {
+				defer wg.Done()
+				return nil
+			}).
+			Run()
+	}()
+
+	playerID := uuid.NewV4().String()
+
+	err := service.HandleReward(&messages.RewardReached{
+		Kind:     "xp",
+		PlayerID: playerID,
+		Data: &messages.RewardExperience{
+			Experience: 10,
+		},
+	})
+
+	err = service.HandleReward(&messages.RewardReached{
+		Kind:     "xp",
+		PlayerID: playerID,
+		Data: &messages.RewardExperience{
+			Experience: 10,
 		},
 	})
 

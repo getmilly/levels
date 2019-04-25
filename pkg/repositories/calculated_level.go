@@ -30,20 +30,25 @@ func NewCalculatedLevelRepository(client *mongo.Client) CalculatedLevelRepositor
 func (repository *calculatedLevelRepository) Set(level *models.CalculatedLevel) error {
 	ctx := context.Background()
 
-	result := repository.collection.FindOneAndReplace(ctx, bson.M{
+	current := new(models.CalculatedLevel)
+	err := repository.collection.FindOne(ctx, bson.M{
 		"player_id": level.PlayerID,
-	}, level)
+	}).Decode(current)
 
-	if result.Err() != nil {
-		if result.Err() == mongo.ErrNoDocuments {
-			_, err := repository.collection.InsertOne(ctx, level)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			_, err = repository.collection.InsertOne(ctx, level)
 			return err
 		}
 
-		return result.Err()
+		return err
 	}
 
-	return nil
+	_, err = repository.collection.ReplaceOne(ctx, bson.M{
+		"player_id": level.PlayerID,
+	}, level)
+
+	return err
 }
 
 func (repository *calculatedLevelRepository) Get(playerID string) (*models.CalculatedLevel, error) {

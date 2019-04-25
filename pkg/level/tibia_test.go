@@ -8,24 +8,16 @@ import (
 	"github.com/getmilly/levels/pkg/level"
 )
 
-func TestTibia_Calculate_Panics(t *testing.T) {
-	assert.Panics(t, func() {
-		level.NewTibiaCalculatorWithDifficulty(-1)
-	})
-}
-
 func TestTibia_Calculate_Upgrade(t *testing.T) {
 	calculator := level.NewTibiaCalculator()
 
-	level := 1
 	totalXP := 350
 
-	result, _ := calculator.Calculate(level, totalXP, 0)
+	result, _ := calculator.Calculate(totalXP)
 
-	assert.True(t, result.HasUpgraded)
-	assert.Equal(t, result.Level, 3)
-	assert.Equal(t, result.TotalExperience, 50)
-	assert.Equal(t, result.ExperienceToUpgrade, 350)
+	assert.Equal(t, 3, result.Level)
+	assert.Equal(t, 50, result.TotalExperience)
+	assert.Equal(t, 350, result.ExperienceToUpgrade)
 }
 
 func TestTibia_Calculate_NonUpgrade(t *testing.T) {
@@ -36,9 +28,8 @@ func TestTibia_Calculate_NonUpgrade(t *testing.T) {
 
 	totalXP := calculator.CalculateExperienceByLevel(level+1) - missingtToUpgrade
 
-	result, _ := calculator.Calculate(level, totalXP, 0)
+	result, _ := calculator.Calculate(totalXP)
 
-	assert.False(t, result.HasUpgraded)
-	assert.Equal(t, result.Level, level)
-	assert.Equal(t, result.ExperienceToUpgrade, missingtToUpgrade)
+	assert.Equal(t, level, result.Level)
+	assert.Equal(t, missingtToUpgrade, result.ExperienceToUpgrade)
 }

@@ -53,6 +53,7 @@ func main() {
 		settings.LevelUpdatedSubject,
 		gnats.NewProducer(conn),
 		level.NewTibiaCalculator(),
+		repositories.NewExperienceHistory(client),
 		repositories.NewCalculatedLevelRepository(client),
 	)
 
